@@ -35,9 +35,25 @@ var vnet2Config = {
   subnetPrefix: '10.2.0.0/24'
 }
 
-/*vm1 の設定用変数*/
-@description('The name of you Virtual Machine.')
-param vmName_vm1 string = 'vm1'
+/*VM共通の設定*/
+@description('The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version.')
+@allowed([
+  '12.04.5-LTS'
+  '14.04.5-LTS'
+  '16_04_0-lts-gen2'
+  '18_04-LTS-gen2'
+])
+param ubuntuOSVersion string = '18_04-LTS-gen2'
+
+@description('The size of the VM')
+@allowed([
+  'Standard_F2s_v2'
+  'Standard_F4s_v2'
+  'Standard_F8s_v2'
+  'Standard_F16s_v2'
+  'Standard_F32s_v2'
+])
+param vmSize string = 'Standard_F8s_v2'
 
 @description('Username for the Virtual Machine.')
 param adminUsername string
@@ -49,24 +65,16 @@ param adminUsername string
 ])
 param authenticationType string = 'password'
 
+/*vm1 の設定用変数*/
+@description('The name of you Virtual Machine.')
+param vmName_vm1 string = 'vm1'
+
 @description('SSH Key or password for the Virtual Machine. SSH key is recommended.')
 @secure()
 param adminPasswordOrKey string
 
 @description('Unique DNS Name for the Public IP used to access the Virtual Machine.')
 param dnsLabelPrefix_vm1 string = toLower('${vmName_vm1}-${uniqueString(resourceGroup().id)}')
-
-@description('The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version.')
-@allowed([
-  '12.04.5-LTS'
-  '14.04.5-LTS'
-  '16_04_0-lts-gen2'
-  '18_04-LTS-gen2'
-])
-param ubuntuOSVersion string = '18_04-LTS-gen2'
-
-@description('The size of the VM')
-param vmSize string = 'Standard_B2s'
 
 @description('Name of the Network Security Group')
 param networkSecurityGroupName1 string = 'SecGroupNet1'
@@ -92,7 +100,6 @@ param vmName_vm2 string = 'vm2'
 
 @description('Unique DNS Name for the Public IP used to access the Virtual Machine.')
 param dnsLabelPrefix_vm2 string = toLower('${vmName_vm2}-${uniqueString(resourceGroup().id)}')
-
 
 @description('Name of the Network Security Group')
 param networkSecurityGroupName2 string = 'SecGroupNet2'
