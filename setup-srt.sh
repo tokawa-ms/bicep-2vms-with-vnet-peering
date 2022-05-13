@@ -32,4 +32,8 @@ git checkout -b n5.0 n5.0
 ./configure --enable-libsrt --enable-libx264 --enable-libx265 --enable-libfreetype --enable-gpl
 make
 sudo make install
+cd ..
+cd ..
 
+# UDP の受信バッファサイズを拡張
+sudo sysctl -w net.core.rmem_max=26214400
