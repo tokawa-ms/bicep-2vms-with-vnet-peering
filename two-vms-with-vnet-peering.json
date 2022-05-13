@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.6.1.6515",
-      "templateHash": "4222246844525546256"
+      "version": "0.6.11.53198",
+      "templateHash": "14467481180202085139"
     }
   },
   "parameters": {
@@ -51,11 +51,31 @@
         "description": "Name for vNet 2"
       }
     },
-    "vmName_vm1": {
+    "ubuntuOSVersion": {
       "type": "string",
-      "defaultValue": "vm1",
+      "defaultValue": "18_04-LTS-gen2",
+      "allowedValues": [
+        "12.04.5-LTS",
+        "14.04.5-LTS",
+        "16_04_0-lts-gen2",
+        "18_04-LTS-gen2"
+      ],
       "metadata": {
-        "description": "The name of you Virtual Machine."
+        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_F8s_v2",
+      "allowedValues": [
+        "Standard_F2s_v2",
+        "Standard_F4s_v2",
+        "Standard_F8s_v2",
+        "Standard_F16s_v2",
+        "Standard_F32s_v2"
+      ],
+      "metadata": {
+        "description": "The size of the VM"
       }
     },
     "adminUsername": {
@@ -75,6 +95,13 @@
         "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
       }
     },
+    "vmName_vm1": {
+      "type": "string",
+      "defaultValue": "vm1",
+      "metadata": {
+        "description": "The name of you Virtual Machine."
+      }
+    },
     "adminPasswordOrKey": {
       "type": "secureString",
       "metadata": {
@@ -86,26 +113,6 @@
       "defaultValue": "[toLower(format('{0}-{1}', parameters('vmName_vm1'), uniqueString(resourceGroup().id)))]",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
-      }
-    },
-    "ubuntuOSVersion": {
-      "type": "string",
-      "defaultValue": "18_04-LTS-gen2",
-      "allowedValues": [
-        "12.04.5-LTS",
-        "14.04.5-LTS",
-        "16_04_0-lts-gen2",
-        "18_04-LTS-gen2"
-      ],
-      "metadata": {
-        "description": "The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version."
-      }
-    },
-    "vmSize": {
-      "type": "string",
-      "defaultValue": "Standard_B2s",
-      "metadata": {
-        "description": "The size of the VM"
       }
     },
     "networkSecurityGroupName1": {
